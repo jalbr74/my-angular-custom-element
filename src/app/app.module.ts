@@ -1,17 +1,23 @@
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
+import { HelloLazyLoaderComponent } from './components/hello-lazy-loader.component';
+import { createCustomElement } from '@angular/elements';
 
 @NgModule({
     declarations: [
-        AppComponent
+        HelloLazyLoaderComponent
     ],
     imports: [
         BrowserModule
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: []
 })
 export class AppModule {
+    constructor(private injector: Injector) {
+    }
+
+    ngDoBootstrap(): void {
+        customElements.define('hello-element', createCustomElement(HelloLazyLoaderComponent, { injector: this.injector }));
+    }
 }

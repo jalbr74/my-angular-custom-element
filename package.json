@@ -5,6 +5,8 @@
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",
+        "postbuild": "node build-scripts/finalize-build-output.js",
+        "postinstall": "node build-scripts/prepare-3rd-party-css.js",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"
@@ -21,7 +23,6 @@
         "@angular/platform-browser-dynamic": "~11.2.10",
         "@angular/router": "~11.2.10",
         "@ux-aspects/ux-aspects": "^3.7.0",
-        "bootstrap": "^4.6.0",
         "ngx-bootstrap": "^6.2.0",
         "rxjs": "~6.6.0",
         "tslib": "^2.0.0",

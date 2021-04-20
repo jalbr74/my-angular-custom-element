@@ -1,5 +1,8 @@
 {
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "cli": {
+      "analytics": false
+    },
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
@@ -28,8 +31,11 @@
                             "src/assets"
                         ],
                         "styles": [
+                            "node_modules/bootstrap/dist/css/bootstrap-modified.css",
+                            "node_modules/@ux-aspects/ux-aspects/styles/ux-aspects-modified.css",
                             "src/styles.scss"
                         ],
+                        "resourcesOutputPath": "css-resources",
                         "scripts": []
                     },
                     "configurations": {
