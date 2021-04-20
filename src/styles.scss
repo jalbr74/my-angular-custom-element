@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+.my-styles-root {
+    // Fixes an issue with modal dialogs not being displayed correctly when the my-styles-root class is applied:
+    &.modal-dialog {
+        height: auto;
+        min-height: auto;
+        background-color: transparent;
+    }
+}

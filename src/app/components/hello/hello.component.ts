@@ -19,6 +19,8 @@ export class HelloComponent implements OnInit {
     }
 
     showDialog(template: TemplateRef<any>): void {
-        this.modalRef = this.modalService.show(template, );
+        this.modalRef = this.modalService.show(template, {
+            class: 'my-styles-root'
+        });
     }
 }
