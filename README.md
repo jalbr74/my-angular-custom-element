@@ -135,7 +135,7 @@ customElements.define('hello-element', createCustomElement(HelloLazyLoaderCompon
 
 
 
-In hello-lazy-loader.component.ts, the HelloModule is lazily loaded, and once resolved it renders the HelloComponent component, for example:
+In hello-custom-element.utils.ts, the HelloModule is lazily loaded, and once resolved it renders the HelloComponent component, for example:
 
 ```typescript
 import('./hello/hello.module')
