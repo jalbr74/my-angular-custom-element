@@ -1,9 +1,9 @@
 import { Compiler, Component, ElementRef, Inject, InjectionToken, Injector } from '@angular/core';
 import { createCustomElement, NgElementConstructor } from '@angular/elements';
 
-export type LazyRenderer = (compiler: Compiler, elementRef: ElementRef, injector: Injector) => void;
+export type LazyRendererFn = (compiler: Compiler, elementRef: ElementRef, injector: Injector) => void;
 
-const LAZY_COMPONENT_RENDERER = new InjectionToken<LazyRenderer>('LazyComponentRenderer');
+const LAZY_COMPONENT_RENDERER = new InjectionToken<LazyRendererFn>('LazyComponentRenderer');
 
 @Component({
     selector: 'app-lazy-renderer',
@@ -11,7 +11,7 @@ const LAZY_COMPONENT_RENDERER = new InjectionToken<LazyRenderer>('LazyComponentR
 })
 export class LazyRendererComponent {
     constructor(
-        @Inject(LAZY_COMPONENT_RENDERER) renderLazyComponent: LazyRenderer,
+        @Inject(LAZY_COMPONENT_RENDERER) renderLazyComponent: LazyRendererFn,
         private compiler: Compiler,
         private elementRef: ElementRef,
         private injector: Injector
@@ -23,7 +23,7 @@ export class LazyRendererComponent {
 /**
  * Creates a custom element based on the LazyRendererComponent.
  */
-export function createLazilyRenderedCustomElement<P>(lazyRenderer: LazyRenderer, injector: Injector): NgElementConstructor<P> {
+export function createLazilyRenderedCustomElement<P>(lazyRenderer: LazyRendererFn, injector: Injector): NgElementConstructor<P> {
     return createCustomElement(LazyRendererComponent, {
         injector: Injector.create({
             providers: [{ provide: LAZY_COMPONENT_RENDERER, useValue: lazyRenderer }],
