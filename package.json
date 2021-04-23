@@ -3,8 +3,10 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
+        "clean": "rimraf dist",
         "start": "ng serve",
         "build": "ng --prod build",
+        "build:dev": "ng build",
         "postbuild": "node build-scripts/finalize-build-output.js",
         "postinstall": "node build-scripts/prepare-3rd-party-css.js",
         "test": "ng test",

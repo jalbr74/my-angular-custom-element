@@ -2,7 +2,8 @@ import { Compiler, Component, ElementRef, Inject, InjectionToken, Injector } fro
 import { createCustomElement, NgElementConstructor } from '@angular/elements';
 
 export type LazyComponentLoader = (compiler: Compiler, elementRef: ElementRef, injector: Injector) => void;
-export const LAZY_COMPONENT_LOADER = new InjectionToken<LazyComponentLoader>('LazyComponentLoader');
+
+const LAZY_COMPONENT_LOADER = new InjectionToken<LazyComponentLoader>('LazyComponentLoader');
 
 @Component({
     selector: 'app-lazy-loader',
