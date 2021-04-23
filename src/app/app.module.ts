@@ -1,10 +1,10 @@
 import { Compiler, ElementRef, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { createLazilyLoadedCustomElement, LazyComponentLoader, LazyLoaderComponent } from './utils/custom-element.utils';
+import { createLazilyRenderedCustomElement, LazyRenderer, LazyRendererComponent } from './utils/custom-element.utils';
 
 @NgModule({
     declarations: [
-        LazyLoaderComponent
+        LazyRendererComponent
     ],
     imports: [
         BrowserModule
@@ -16,12 +16,12 @@ export class AppModule {
     }
 
     ngDoBootstrap(): void {
-        const helloComponentLazyLoader: LazyComponentLoader = (compiler: Compiler, elementRef: ElementRef, injector: Injector) => {
+        const helloComponentLazyRenderer: LazyRenderer = (compiler: Compiler, elementRef: ElementRef, injector: Injector) => {
             import('./components/hello/hello.module')
                 .then(moduleDef => compiler.compileModuleAsync(moduleDef.HelloModule))
-                .then(moduleFactory => moduleFactory.create(injector).instance.renderMainComponent(elementRef.nativeElement));
+                .then(moduleFactory => moduleFactory.create(injector).instance.renderComponent(elementRef.nativeElement));
         };
 
-        customElements.define('hello-element', createLazilyLoadedCustomElement(helloComponentLazyLoader, this.injector));
+        customElements.define('hello-element', createLazilyRenderedCustomElement(helloComponentLazyRenderer, this.injector));
     }
 }

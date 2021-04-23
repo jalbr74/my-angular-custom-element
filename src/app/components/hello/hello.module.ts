@@ -16,7 +16,7 @@ export class HelloModule {
     constructor(private injector: Injector) {
     }
 
-    renderMainComponent(element: HTMLElement): void {
+    renderComponent(element: HTMLElement): void {
         renderComponent(HelloComponent, { host: element, injector: this.injector });
     }
 }
