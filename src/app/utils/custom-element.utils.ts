@@ -1,22 +1,37 @@
-import { Compiler, Component, ElementRef, Inject, InjectionToken, Injector } from '@angular/core';
+import {
+    AfterViewInit,
+    Compiler,
+    Component,
+    ElementRef,
+    Inject,
+    InjectionToken,
+    Injector,
+    OnInit,
+    ViewChild,
+    ViewContainerRef
+} from '@angular/core';
 import { createCustomElement, NgElementConstructor } from '@angular/elements';
 
-export type LazyRendererFn = (compiler: Compiler, elementRef: ElementRef, injector: Injector) => void;
+export type LazyRendererFn = (compiler: Compiler, injector: Injector, containerRef: ViewContainerRef) => void;
 
 const LAZY_RENDERER_FUNCTION = new InjectionToken<LazyRendererFn>('LazyRendererFn');
 
 @Component({
     selector: 'app-lazy-renderer',
-    template: ''
+    template: '<ng-container #containerRef></ng-container>'
 })
-export class LazyRendererComponent {
+export class LazyRendererComponent implements AfterViewInit {
+    @ViewChild('containerRef', { read: ViewContainerRef }) containerRef?: ViewContainerRef;
+
     constructor(
-        @Inject(LAZY_RENDERER_FUNCTION) renderComponent: LazyRendererFn,
         private compiler: Compiler,
-        private elementRef: ElementRef,
-        private injector: Injector
+        private injector: Injector,
+        @Inject(LAZY_RENDERER_FUNCTION) private renderComponent: LazyRendererFn
     ) {
-        renderComponent(compiler, elementRef, injector);
+    }
+
+    ngAfterViewInit(): void {
+        this.renderComponent(this.compiler, this.injector, this.containerRef);
     }
 }
 

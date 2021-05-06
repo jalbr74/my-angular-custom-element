@@ -6,16 +6,12 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
     templateUrl: './hello.component.html',
     styleUrls: ['./hello.component.scss']
 })
-export class HelloComponent implements OnInit {
+export class HelloComponent {
     @HostBinding('class') classes = 'my-styles-root';
 
     modalRef: BsModalRef;
 
-    constructor(private modalService: BsModalService, private elementRef: ElementRef) {
-    }
-
-    ngOnInit(): void {
-        console.log('The message passed in from a tag attribute is: ' + this.elementRef.nativeElement.getAttribute('message'));
+    constructor(private modalService: BsModalService) {
     }
 
     showDialog(template: TemplateRef<any>): void {
