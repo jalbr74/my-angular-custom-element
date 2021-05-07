@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Injector, NgModule, ViewContainerRef } from '@angular/core';
+import { ComponentFactory, ComponentFactoryResolver, Injector, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HelloComponent } from './hello.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -16,7 +16,7 @@ export class HelloModule {
     constructor(private injector: Injector, private componentFactoryResolver: ComponentFactoryResolver) {
     }
 
-    renderComponent(containerRef?: ViewContainerRef): void {
-        containerRef?.createComponent(this.componentFactoryResolver.resolveComponentFactory(HelloComponent), 0, this.injector);
+    getHelloComponentFactory(): ComponentFactory<HelloComponent> {
+        return this.componentFactoryResolver.resolveComponentFactory(HelloComponent);
     }
 }

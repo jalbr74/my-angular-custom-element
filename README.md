@@ -130,25 +130,21 @@ index.html was also modified to remove `<app-root></app-root>` and replace it wi
 To incur as little overhead as possible on the host web application, the HelloComponent uses a wrapper component, which lazily loads the HelloModule when rendered. See app.module.ts for how the wrapper component is defined as a custom element, for example:
 
 ```typescript
-customElements.define('hello-element', createCustomElement(HelloLazyLoaderComponent, { injector: this.injector }));
+customElements.define('hello-element', createCustomElement(LazyLoaderForHelloComponent, { injector: this.injector }));
 ```
 
 
 
-In hello-custom-element.utils.ts, the HelloModule is lazily loaded, and once resolved it renders the HelloComponent component, for example:
+In lazy-loader-for-hello.component.ts, the HelloModule is lazily loaded, and queried for the component factory for the HelloComponent. This is passed to the createComponent method of ViewContainerRef, which renders the component in the place of `<ng-container #containerRef></ng-container>`.
 
 ```typescript
-import('./hello/hello.module')
-    .then(m => this.compiler.compileModuleAsync(m.HelloModule))
-    .then(moduleFactory => moduleFactory.create(this.injector).instance.renderMainComponent(this.elementRef.nativeElement));
-```
+async ngAfterViewInit(): Promise<void> {
+    const moduleDef = await import('../components/hello/hello.module');
+    const moduleFactory = await this.compiler.compileModuleAsync(moduleDef.HelloModule);
+    const componentFactory = moduleFactory.create(this.injector).instance.getHelloComponentFactory();
 
-
-
-In hello.module.ts, the HelloComponent is rendered into the original tag: `<hello-element>`, for example:
-
-```typescript
-renderComponent(HelloComponent, { host: element, injector: this.injector });
+    this.containerRef.createComponent(componentFactory, 0, this.injector);
+}
 ```
 
 
