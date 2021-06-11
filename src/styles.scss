@@ -1,8 +1,15 @@
+// Since all rem values are calculated off the root, we need to make sure this value is set to 16px so bootstrap's
+// calculations are made properly.
+:root {
+    font-size: 16px;
+}
+
 .my-styles-root {
-    // Fixes an issue with modal dialogs not being displayed correctly when the my-styles-root class is applied:
-    &.modal-dialog {
+    // This fixes an issue with modal dialogs not being displayed correctly when the encapsulating class is applied:
+    &.modal {
         height: auto;
         min-height: auto;
         background-color: transparent;
+        position: fixed;
     }
 }

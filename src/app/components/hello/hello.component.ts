@@ -16,7 +16,7 @@ export class HelloComponent {
 
     showDialog(template: TemplateRef<any>): void {
         this.modalRef = this.modalService.show(template, {
-            class: 'my-styles-root'
+            class: 'iam-modal-dialog'
         });
     }
 }

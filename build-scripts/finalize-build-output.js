@@ -1,6 +1,6 @@
 const replace = require('replace-in-file');
 const globby = require('globby');
-const concat = require('concat-files');
+const fs = require('fs');
 
 /**
  * This script creates a single app.js file to make it easier to embed into other web applications. It also copies the
@@ -17,5 +17,16 @@ const cssFiles = globby.sync(['styles.*.css'], { cwd: WORKING_DIR, absolute: tru
 
 replace.sync({ files: WORKING_DIR + '/*.js', from: /\bwebpackJsonp\b/g, to: NEW_JSONP_FUNCTION });
 
-concat(jsFiles, WORKING_DIR + '/app.js');
-concat(cssFiles, WORKING_DIR + '/app-styles.css');
+function concat(inputFiles, outputFile) {
+    if (fs.existsSync(outputFile)) {
+        fs.unlinkSync(outputFile);
+    }
+
+    inputFiles.forEach((inputFile) => {
+        fs.appendFileSync(outputFile, fs.readFileSync(inputFile));
+        fs.appendFileSync(outputFile, '\n\n');
+    });
+}
+
+concat(jsFiles, WORKING_DIR + '/' + angularJson.defaultProject + '-all.js');
+concat(cssFiles, WORKING_DIR + '/' + angularJson.defaultProject + '-all.css');
